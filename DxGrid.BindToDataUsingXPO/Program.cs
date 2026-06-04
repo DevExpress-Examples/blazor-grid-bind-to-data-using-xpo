@@ -1,4 +1,4 @@
-﻿using BlazorBlankServer.Components;
+﻿using DxGrid.BindToDataUsingXPO.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
