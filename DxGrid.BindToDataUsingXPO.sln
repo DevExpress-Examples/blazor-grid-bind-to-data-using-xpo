@@ -5,6 +5,8 @@ VisualStudioVersion = 18.5.11801.241
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DxGrid.BindToDataUsingXPO", "DxGrid.BindToDataUsingXPO\DxGrid.BindToDataUsingXPO.csproj", "{31409846-9F99-58DE-E0DA-4E08A28E055C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DxGrid.BindToDataUsingXPO.WebAPI", "DxGrid.BindToDataUsingXPO.WebAPI\DxGrid.BindToDataUsingXPO.WebAPI.csproj", "{665DB1E4-2E4E-4B60-9315-1B607557092B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{31409846-9F99-58DE-E0DA-4E08A28E055C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31409846-9F99-58DE-E0DA-4E08A28E055C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31409846-9F99-58DE-E0DA-4E08A28E055C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{665DB1E4-2E4E-4B60-9315-1B607557092B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{665DB1E4-2E4E-4B60-9315-1B607557092B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{665DB1E4-2E4E-4B60-9315-1B607557092B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{665DB1E4-2E4E-4B60-9315-1B607557092B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

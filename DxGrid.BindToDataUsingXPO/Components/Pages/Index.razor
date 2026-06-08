@@ -1,7 +1,29 @@
 ﻿@page "/"
+@inject IHttpClientFactory ClientFactory
 
-<PageTitle>Welcome</PageTitle>
+@rendermode InteractiveServer
 
-<div class="main-content">
-    Welcome to your new DevExpress Blazor Application
-</div>
+<DxGrid Data="GridDataSource">
+    <Columns>
+        <DxGridDataColumn FieldName="Id" ReadOnly="true" />
+        <DxGridDataColumn FieldName="FullName" />
+    </Columns>
+</DxGrid>
+
+@code {
+    GridDevExtremeDataSource<Person>? GridDataSource { get; set; } = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var httpClient = ClientFactory.CreateClient("XpoApi");
+        var uri = new Uri(httpClient.BaseAddress!, "Person");
+        
+        GridDataSource = new(httpClient, uri);
+    }
+
+    class Person
+    {
+        public int Id { get; set; }
+        public string? FullName { get; set; }
+    }
+}

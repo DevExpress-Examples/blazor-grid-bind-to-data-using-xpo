@@ -11,6 +11,10 @@ builder.Services.AddDevExpressBlazor(options => {
 });
 builder.Services.AddMvc();
 
+builder.Services.AddHttpClient("XpoApi", client => {
+    client.BaseAddress = new Uri("https://localhost:7298");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
