@@ -1,29 +1,32 @@
 ﻿@page "/"
+@using DxGrid.BindToDataUsingXPO.Models
 @inject IHttpClientFactory ClientFactory
-
+@implements IDisposable
 @rendermode InteractiveServer
 
 <DxGrid Data="GridDataSource">
     <Columns>
-        <DxGridDataColumn FieldName="Id" ReadOnly="true" />
-        <DxGridDataColumn FieldName="FullName" />
+        <DxGridDataColumn FieldName="@nameof(OrderDto.Id)" ReadOnly="true" />
+        <DxGridDataColumn FieldName="@nameof(OrderDto.OrderDate)" />
+        <DxGridDataColumn FieldName="@nameof(OrderDto.ExpectedDeliveryDate)" />
+        <DxGridDataColumn FieldName="@nameof(OrderDto.PickingCompletedWhen)" />
+        <DxGridDataColumn FieldName="@nameof(OrderDto.CustomerPurchaseOrderNumber)" />
+        <DxGridDataColumn FieldName="@nameof(OrderDto.CustomerID)" />
     </Columns>
 </DxGrid>
 
 @code {
-    GridDevExtremeDataSource<Person>? GridDataSource { get; set; } = null;
+    GridDevExtremeDataSource<OrderDto>? GridDataSource { get; set; } = null;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         var httpClient = ClientFactory.CreateClient("XpoApi");
-        var uri = new Uri(httpClient.BaseAddress!, "Person");
-        
+        var uri = new Uri(httpClient.BaseAddress!, "Orders");
         GridDataSource = new(httpClient, uri);
     }
 
-    class Person
+    public void Dispose()
     {
-        public int Id { get; set; }
-        public string? FullName { get; set; }
+        GridDataSource = null;
     }
 }

@@ -18,7 +18,7 @@ builder.Services.AddXpoDefaultUnitOfWork();
 
 builder.Services.AddCors(options => {
     options.AddPolicy("BlazorPolicy", policy => {
-        policy.WithOrigins("https://localhost:7226")
+        policy.WithOrigins("https://localhost:51314")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -30,6 +30,7 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
+app.UseCors("BlazorPolicy");
 app.UseAuthorization();
 
 app.MapControllers();

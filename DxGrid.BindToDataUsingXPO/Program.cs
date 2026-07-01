@@ -12,7 +12,7 @@ builder.Services.AddDevExpressBlazor(options => {
 builder.Services.AddMvc();
 
 builder.Services.AddHttpClient("XpoApi", client => {
-    client.BaseAddress = new Uri("https://localhost:7298");
+    client.BaseAddress = new Uri("https://localhost:51315");
 });
 
 var app = builder.Build();
