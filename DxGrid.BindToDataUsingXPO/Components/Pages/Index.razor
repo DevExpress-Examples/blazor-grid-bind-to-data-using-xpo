@@ -4,14 +4,16 @@
 @implements IDisposable
 @rendermode InteractiveServer
 
+<h1>Blazor Grid - Bind to Data using XPO</h1>
+
 <DxGrid Data="GridDataSource">
     <Columns>
-        <DxGridDataColumn FieldName="@nameof(OrderDto.Id)" ReadOnly="true" />
+        <DxGridDataColumn FieldName="@nameof(OrderDto.Id)" Width="80" />
         <DxGridDataColumn FieldName="@nameof(OrderDto.OrderDate)" />
         <DxGridDataColumn FieldName="@nameof(OrderDto.ExpectedDeliveryDate)" />
         <DxGridDataColumn FieldName="@nameof(OrderDto.PickingCompletedWhen)" />
         <DxGridDataColumn FieldName="@nameof(OrderDto.CustomerPurchaseOrderNumber)" />
-        <DxGridDataColumn FieldName="@nameof(OrderDto.CustomerID)" />
+        <DxGridDataColumn FieldName="@nameof(OrderDto.CustomerID)" Width="120" />
     </Columns>
 </DxGrid>
 
