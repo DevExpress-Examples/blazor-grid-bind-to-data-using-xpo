@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Start Project + WebAPI",
+    "Projects": [
+      {
+        "Path": "DxGrid.BindToDataUsingXPO.WebAPI\\DxGrid.BindToDataUsingXPO.WebAPI.csproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "DxGrid.BindToDataUsingXPO\\DxGrid.BindToDataUsingXPO.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

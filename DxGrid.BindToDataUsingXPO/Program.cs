@@ -12,7 +12,9 @@ builder.Services.AddDevExpressBlazor(options => {
 builder.Services.AddMvc();
 
 builder.Services.AddHttpClient("XpoApi", client => {
-    client.BaseAddress = new Uri("https://localhost:51315");
+    var baseAddress = builder.Configuration["XpoApi:BaseAddress"]
+        ?? throw new InvalidOperationException("Configure 'XpoApi:BaseAddress' in appsettings.json to point at the WebAPI project's URL.");
+    client.BaseAddress = new Uri(baseAddress);
 });
 
 var app = builder.Build();
