@@ -311,3 +311,8 @@ TesterMetadata.xml
 package-lock.json
 
 .angular/
+
+# Include appsettings.json files
+
+!DxGrid.BindToDataUsingXPO/Properties/launchSettings.json
+!DxGrid.BindToDataUsingXPO.WebAPI/Properties/launchSettings.json
