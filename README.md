@@ -1,0 +1,133 @@
+<!-- default badges list -->
+<!-- default badges end -->
+# Blazor Grid - Bind to Data Using XPO
+
+This example uses **DevExpress eXpress Persistent Objects (XPO) ORM** to bind the Blazor **DxGrid** to data stored in a database: a Web API backend queries XPO persistent objects and exposes data to the Blazor application through a [GridDevExtremeDataSource\<T\>](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridDevExtremeDataSource-1).
+
+The example covers the following implementation steps:
+* Configure XPO.
+* Implement a Web API endpoint that supports server-side data operations (paging, sorting, and filtering).
+* Connect DxGrid to the endpoint.
+
+As a result, the grid performs data operations on demand and loads only the records required for display. This keeps the solution efficient for large datasets.
+
+## Implementation Details
+
+### Configure the Server to Access Data Using XPO
+
+Follow the steps below to configure [XPO](https://docs.devexpress.com/XPO/2004/express-persistent-objects) in the [WebAPI](.\CS\DxGrid.BindToDataUsingXPO.WebAPI\DxGrid.BindToDataUsingXPO.WebAPI.csproj) project:
+
+1. In the [Program.cs](.\CS\DxGrid.BindToDataUsingXPO.WebAPI\Program.cs) file, register the XPO data layer and unit of work.
+1. Define persistent object types used in the app and a connection string:
+
+    ```cs
+    builder.Services.AddXpoDefaultDataLayer(ServiceLifetime.Singleton, dl => dl
+        .UseConnectionString(builder.Configuration.GetConnectionString("WideWorldImportersExample"))
+        .UseThreadSafeDataLayer(true)
+        .UseConnectionPool(false)
+        .UseAutoCreationOption(DevExpress.Xpo.DB.AutoCreateOption.DatabaseAndSchema)
+        .UseEntityTypes(typeof(People), typeof(Orders), typeof(Customers))
+    );
+    builder.Services.AddXpoDefaultUnitOfWork();
+    ```
+
+1. In the [BindToDataUsingXPO.WebAPI\Data\Orders.cs](.\CS\DxGrid.BindToDataUsingXPO.WebAPI\Data\Orders.cs), inherit persistent objects (such as `Orders`) from the `XPBaseObject` to expose properties that you want to map to database columns.
+
+    ```cs
+    public class Orders(Session session) : XPBaseObject(session) {
+        [Key, Persistent("OrderID")]
+        public int ID;
+
+        private DateTime orderDate;
+        public DateTime OrderDate {
+            get => orderDate;
+            set => SetPropertyValue(nameof(OrderDate), ref orderDate, value);
+        }
+
+        // ...
+    }
+    ```
+
+### Expose Data Through a Web API Controller
+
+Create an API controller that queries the XPO `UnitOfWork`, shapes the result, and uses the `DevExtreme.AspNet.Data` library's [DataSourceLoader](https://devexpress.github.io/DevExtreme.AspNet.Data/net/api/DevExtreme.AspNet.Data.DataSourceLoader.html) to apply paging, sorting, and filtering based on the grid's load options:
+
+```cs
+[HttpGet]
+public ActionResult Get(DataSourceLoadOptions loadOptions) {
+    try {
+        var query = uow.Query<Orders>();
+        var projection = query.Select(p => new {
+            Id = p.ID,
+            p.OrderDate,
+            p.ExpectedDeliveryDate,
+            // ...
+        });
+
+        loadOptions = loadOptions ?? new DataSourceLoadOptions();
+        loadOptions.PrimaryKey = new[] { "Id" };
+        loadOptions.PaginateViaPrimaryKey = true;
+        var loadResult = DataSourceLoader.Load(projection, loadOptions);
+
+        return Ok(loadResult);
+    }
+    catch(Exception ex) {
+        return BadRequest(ex);
+    }
+}
+```
+
+### Bind the Blazor Grid to the Web API
+
+1. In the Blazor client project ([DxGrid.BindToDataUsingXPO](CS\DxGrid.BindToDataUsingXPO\DxGrid.BindToDataUsingXPO.csproj)), add a **DxGrid** component with multiple [DxGridDataColumn](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn) objects:
+
+    ```razor
+    <DxGrid Data="GridDataSource">
+        <Columns>
+            <DxGridDataColumn FieldName="@nameof(OrderDto.Id)" Width="80" />
+            <DxGridDataColumn FieldName="@nameof(OrderDto.OrderDate)" />
+            <DxGridDataColumn FieldName="@nameof(OrderDto.ExpectedDeliveryDate)" />
+            <DxGridDataColumn FieldName="@nameof(OrderDto.PickingCompletedWhen)" />
+            <DxGridDataColumn FieldName="@nameof(OrderDto.CustomerPurchaseOrderNumber)" />
+            <DxGridDataColumn FieldName="@nameof(OrderDto.CustomerID)" Width="120" />
+        </Columns>
+    </DxGrid>
+    ```
+
+1. Create a [GridDevExtremeDataSource\<T\>](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridDevExtremeDataSource-1) instance and pass an `HttpClient` along with the controller's endpoint URI. Assign the instance to the grid's **Data** property:
+
+    ```razor
+    @code {
+        GridDevExtremeDataSource<OrderDto>? GridDataSource { get; set; } = null;
+
+        protected override void OnInitialized() {
+            var httpClient = ClientFactory.CreateClient("XpoApi");
+            var uri = new Uri(httpClient.BaseAddress!, "Orders");
+            GridDataSource = new(httpClient, uri);
+        }
+    }
+    ```
+
+The grid sends requests to the Web API. The API delegates data shaping to XPO's query provider. This allows DxGrid to load only the data required for screen display instead of the entire dataset.
+
+
+## Files to Review
+
+* [DxGrid.BindToDataUsingXPO.WebAPI - Program.cs](.\CS\DxGrid.BindToDataUsingXPO.WebAPI\Program.cs)
+* [DxGrid.BindToDataUsingXPO.WebAPI - Orders.cs](.\CS\DxGrid.BindToDataUsingXPO.WebAPI\Data\Orders.cs)
+* [DxGrid.BindToDataUsingXPO - Program.cs](CS\DxGrid.BindToDataUsingXPO\Program.cs)
+* [DxGrid.BindToDataUsingXPO - Index.razor](CS\DxGrid.BindToDataUsingXPO\Components\Pages\Index.razor)
+
+## Documentation
+
+* [XPO](https://docs.devexpress.com/XPO/2004/express-persistent-objects)
+* [GridDevExtremeDataSource\<T\>](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridDevExtremeDataSource-1)
+* [DevExtreme.AspNet.Data.DataSourceLoader](https://devexpress.github.io/DevExtreme.AspNet.Data/net/api/DevExtreme.AspNet.Data.DataSourceLoader.html)
+
+<!-- feedback -->
+## Does This Example Address Your Development Requirements/Objectives?
+
+[<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=pdf-document-api-highlight-search-results&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=pdf-document-api-highlight-search-results&~~~was_helpful=no)
+
+(you will be redirected to DevExpress.com to submit your response)
+<!-- feedback end -->
