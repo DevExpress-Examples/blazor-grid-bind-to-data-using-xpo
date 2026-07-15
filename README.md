@@ -2,8 +2,7 @@
 <!-- default badges end -->
 # Blazor Grid - Bind the Component to Data Using XPO
 
-This example uses [DevExpress eXpress Persistent Objects (XPO) ORM](https://docs.devexpress.com/XPO/1998/express-persistent-objects) to bind the Blazor **DxGrid** to a database: a Web API backend retrieves XPO persistent objects and passes data to a Blazor application.
-
+This example uses [DevExpress eXpress Persistent Objects (XPO) ORM](https://docs.devexpress.com/XPO/1998/express-persistent-objects) to bind the Blazor **DxGrid** to a database: a Web API backend retrieves XPO persistent objects and passes data to a Blazor application.
 
 ## Implementation Details
 
@@ -24,7 +23,7 @@ This example uses [DevExpress eXpress Persistent Objects (XPO) ORM](https://docs
     builder.Services.AddXpoDefaultUnitOfWork();
     ```
 
-1. In the [BindToDataUsingXPO.WebAPI\Data\Orders.cs](.\CS\DxGrid.BindToDataUsingXPO.WebAPI\Data\Orders.cs), inherit persistent objects (such as `Orders`) from the `XPBaseObject` to expose properties that you want to map to database columns.
+1. In the [BindToDataUsingXPO.WebAPI\Data\Orders.cs](CS\DxGrid.BindToDataUsingXPO.WebAPI\Data\Orders.cs), inherit persistent objects (such as `Orders`) from the `XPBaseObject` to expose properties that you want to map to database columns.
 
     ```cs
     public class Orders(Session session) : XPBaseObject(session) {
