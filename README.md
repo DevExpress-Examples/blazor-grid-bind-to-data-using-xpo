@@ -2,7 +2,7 @@
 <!-- default badges end -->
 # Blazor Grid - Bind the Component to Data Using XPO
 
-This example uses [DevExpress eXpress Persistent Objects (XPO) ORM](https://docs.devexpress.com/XPO/1998/express-persistent-objects) to bind the Blazor `DxGrid` to a database: a Web API backend retrieves XPO persistent objects and passes data to a Blazor application.
+This example uses the [DevExpress eXpress Persistent Objects (XPO) ORM](https://docs.devexpress.com/XPO/1998/express-persistent-objects) to bind the DevExpress Blazor Grid (`DxGrid`)  to a database: a Web API backend retrieves XPO persistent objects and passes data to a Blazor application.
 
 ## Implementation Details
 
@@ -23,7 +23,7 @@ This example uses [DevExpress eXpress Persistent Objects (XPO) ORM](https://docs
     builder.Services.AddXpoDefaultUnitOfWork();
     ```
 
-1. In the [BindToDataUsingXPO.WebAPI\Data](CS/DxGrid.BindToDataUsingXPO.WebAPI/Data) folder, inherit persistent objects (such as [Orders](BindToDataUsingXPO.WebAPI\Data\Orders.cs)) from the `XPBaseObject` to expose properties that you want to map to database columns.
+1. In the [BindToDataUsingXPO.WebAPI\Data](CS/DxGrid.BindToDataUsingXPO.WebAPI/Data) folder, inherit persistent objects (such as [Orders](BindToDataUsingXPO.WebAPI\Data\Orders.cs)) from the `XPBaseObject` to expose properties that you wish to map to database columns.
 
     ```cs
     public class Orders(Session session) : XPBaseObject(session) {
@@ -41,7 +41,7 @@ This example uses [DevExpress eXpress Persistent Objects (XPO) ORM](https://docs
 
 ### Retrieve Data Using a Web API Controller
 
-Create an API controller that queries the XPO `UnitOfWork`, shapes the result, and uses the `DevExtreme.AspNet.Data` library [DataSourceLoader](https://devexpress.github.io/DevExtreme.AspNet.Data/net/api/DevExtreme.AspNet.Data.DataSourceLoader.html) to apply paging, sorting, and filtering based on the grid [load options](CS/DxGrid.BindToDataUsingXPO.WebAPI/Controllers):
+Create an API controller that queries XPO's `UnitOfWork`, shapes the result, and uses the `DevExtreme.AspNet.Data` library [DataSourceLoader](https://devexpress.github.io/DevExtreme.AspNet.Data/net/api/DevExtreme.AspNet.Data.DataSourceLoader.html) to apply paging, sorting, and filtering based on the grid [load options](CS/DxGrid.BindToDataUsingXPO.WebAPI/Controllers):
 
 ```cs
 [HttpGet]
@@ -70,7 +70,7 @@ public ActionResult Get(DataSourceLoadOptions loadOptions) {
 
 ### Bind a Blazor Grid to Data
 
-1. In a Blazor client application ([DxGrid.BindToDataUsingXPO](CS\DxGrid.BindToDataUsingXPO\DxGrid.BindToDataUsingXPO.csproj)), add a `DxGrid` component with multiple [DxGridDataColumn](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn) objects:
+1. In your Blazor client application ([DxGrid.BindToDataUsingXPO](CS\DxGrid.BindToDataUsingXPO\DxGrid.BindToDataUsingXPO.csproj)), add a `DxGrid` component with multiple [DxGridDataColumn](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn) objects:
 
     ```razor
     <DxGrid>
@@ -105,7 +105,7 @@ public ActionResult Get(DataSourceLoadOptions loadOptions) {
     }
     ```
 
-The grid sends requests to the Web API that delegates data shaping to XPO query provider. The Grid loads data required to display on screen instead of the entire dataset.
+The grid sends requests to a Web API that delegates data shaping to the XPO query provider. The Grid loads data necessary for screen display (instead of the entire dataset).
 
 
 ## Files to Review
