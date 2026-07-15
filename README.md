@@ -1,21 +1,14 @@
 <!-- default badges list -->
 <!-- default badges end -->
-# Blazor Grid - Bind to Data Using XPO
+# Blazor Grid - Bind the Component to Data Using XPO
 
-This example uses **DevExpress eXpress Persistent Objects (XPO) ORM** to bind the Blazor **DxGrid** to data stored in a database: a Web API backend queries XPO persistent objects and exposes data to the Blazor application through a [GridDevExtremeDataSource\<T\>](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridDevExtremeDataSource-1).
+This example uses [DevExpress eXpress Persistent Objects (XPO) ORM](https://docs.devexpress.com/XPO/1998/express-persistent-objects) to bind the Blazor **DxGrid** to a database: a Web API backend retrieves XPO persistent objects and passes data to a Blazor application.
 
-The example covers the following implementation steps:
-* Configure XPO.
-* Implement a Web API endpoint that supports server-side data operations (paging, sorting, and filtering).
-* Connect DxGrid to the endpoint.
-
-As a result, the grid performs data operations on demand and loads only the records required for display. This keeps the solution efficient for large datasets.
 
 ## Implementation Details
 
 ### Configure the Server to Access Data Using XPO
 
-Follow the steps below to configure [XPO](https://docs.devexpress.com/XPO/2004/express-persistent-objects) in the [WebAPI](.\CS\DxGrid.BindToDataUsingXPO.WebAPI\DxGrid.BindToDataUsingXPO.WebAPI.csproj) project:
 
 1. In the [Program.cs](.\CS\DxGrid.BindToDataUsingXPO.WebAPI\Program.cs) file, register the XPO data layer and unit of work.
 1. Define persistent object types used in the app and a connection string:
@@ -43,12 +36,11 @@ Follow the steps below to configure [XPO](https://docs.devexpress.com/XPO/2004/e
             get => orderDate;
             set => SetPropertyValue(nameof(OrderDate), ref orderDate, value);
         }
-
         // ...
     }
     ```
 
-### Expose Data Through a Web API Controller
+### Retrieve Data Using a Web API Controller
 
 Create an API controller that queries the XPO `UnitOfWork`, shapes the result, and uses the `DevExtreme.AspNet.Data` library's [DataSourceLoader](https://devexpress.github.io/DevExtreme.AspNet.Data/net/api/DevExtreme.AspNet.Data.DataSourceLoader.html) to apply paging, sorting, and filtering based on the grid's load options:
 
@@ -77,9 +69,9 @@ public ActionResult Get(DataSourceLoadOptions loadOptions) {
 }
 ```
 
-### Bind the Blazor Grid to the Web API
+### Bind a Blazor Grid to Data
 
-1. In the Blazor client project ([DxGrid.BindToDataUsingXPO](CS\DxGrid.BindToDataUsingXPO\DxGrid.BindToDataUsingXPO.csproj)), add a **DxGrid** component with multiple [DxGridDataColumn](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn) objects:
+1. In a Blazor client application ([DxGrid.BindToDataUsingXPO](CS\DxGrid.BindToDataUsingXPO\DxGrid.BindToDataUsingXPO.csproj)), add a **DxGrid** component with multiple [DxGridDataColumn](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn) objects:
 
     ```razor
     <DxGrid Data="GridDataSource">
@@ -94,7 +86,7 @@ public ActionResult Get(DataSourceLoadOptions loadOptions) {
     </DxGrid>
     ```
 
-1. Create a [GridDevExtremeDataSource\<T\>](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridDevExtremeDataSource-1) instance and pass an `HttpClient` along with the controller's endpoint URI. Assign the instance to the grid's **Data** property:
+1. Create a [GridDevExtremeDataSource\<T\>](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridDevExtremeDataSource-1) instance and pass the `HttpClient` parameter and controller endpoint URI. Assign the instance to the Grid **Data** property:
 
     ```razor
     @code {
