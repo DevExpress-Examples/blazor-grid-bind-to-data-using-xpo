@@ -27,7 +27,7 @@ This example uses the [DevExpress eXpress Persistent Objects (XPO) ORM](https://
     builder.Services.AddXpoDefaultUnitOfWork();
     ```
 
-1. In the [BindToDataUsingXPO.WebAPI\Data](CS/DxGrid.BindToDataUsingXPO.WebAPI/Data) folder, inherit persistent objects (such as [Orders](CS/BindToDataUsingXPO.WebAPI/Data/Orders.cs)) from the `XPBaseObject` to expose properties that you wish to map to database columns.
+1. In the [BindToDataUsingXPO.WebAPI\Data](CS/DxGrid.BindToDataUsingXPO.WebAPI/Data) folder, inherit persistent objects (such as [Orders](CS/DxGrid.BindToDataUsingXPO.WebAPI/Data/Orders.cs)) from the `XPBaseObject` to expose properties that you wish to map to database columns.
 
     ```cs
     public class Orders(Session session) : XPBaseObject(session) {
