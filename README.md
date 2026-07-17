@@ -13,7 +13,7 @@ This example uses the [DevExpress eXpress Persistent Objects (XPO) ORM](https://
 ### Configure the Server to Access Data Using XPO
 
 
-1. In the [Program.cs](.\CS\DxGrid.BindToDataUsingXPO.WebAPI\Program.cs) file, register the XPO data layer and unit of work.
+1. In the [Program.cs](CS/DxGrid.BindToDataUsingXPO.WebAPI/Program.cs) file, register the XPO data layer and unit of work.
 1. Define persistent object types used in the app and a connection string:
 
     ```cs
@@ -27,7 +27,7 @@ This example uses the [DevExpress eXpress Persistent Objects (XPO) ORM](https://
     builder.Services.AddXpoDefaultUnitOfWork();
     ```
 
-1. In the [BindToDataUsingXPO.WebAPI\Data](CS/DxGrid.BindToDataUsingXPO.WebAPI/Data) folder, inherit persistent objects (such as [Orders](BindToDataUsingXPO.WebAPI\Data\Orders.cs)) from the `XPBaseObject` to expose properties that you wish to map to database columns.
+1. In the [BindToDataUsingXPO.WebAPI\Data](CS/DxGrid.BindToDataUsingXPO.WebAPI/Data) folder, inherit persistent objects (such as [Orders](CS/BindToDataUsingXPO.WebAPI/Data/Orders.cs)) from the `XPBaseObject` to expose properties that you wish to map to database columns.
 
     ```cs
     public class Orders(Session session) : XPBaseObject(session) {
@@ -74,7 +74,7 @@ public ActionResult Get(DataSourceLoadOptions loadOptions) {
 
 ### Bind a Blazor Grid to Data
 
-1. In your Blazor client application ([DxGrid.BindToDataUsingXPO](CS\DxGrid.BindToDataUsingXPO\DxGrid.BindToDataUsingXPO.csproj)), add a `DxGrid` component with multiple [DxGridDataColumn](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn) objects:
+1. In your Blazor client application ([DxGrid.BindToDataUsingXPO](CS/DxGrid.BindToDataUsingXPO/DxGrid.BindToDataUsingXPO.csproj)), add a `DxGrid` component with multiple [DxGridDataColumn](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn) objects:
 
     ```razor
     <DxGrid>
@@ -114,10 +114,10 @@ The grid sends requests to a Web API that delegates data shaping to the XPO quer
 
 ## Files to Review
 
-* [DxGrid.BindToDataUsingXPO.WebAPI - Program.cs](.\CS\DxGrid.BindToDataUsingXPO.WebAPI\Program.cs)
-* [DxGrid.BindToDataUsingXPO.WebAPI - Orders.cs](.\CS\DxGrid.BindToDataUsingXPO.WebAPI\Data\Orders.cs)
-* [DxGrid.BindToDataUsingXPO - Program.cs](CS\DxGrid.BindToDataUsingXPO\Program.cs)
-* [DxGrid.BindToDataUsingXPO - Index.razor](CS\DxGrid.BindToDataUsingXPO\Components\Pages\Index.razor)
+* [DxGrid.BindToDataUsingXPO.WebAPI - Program.cs](CS/DxGrid.BindToDataUsingXPO.WebAPI/Program.cs)
+* [DxGrid.BindToDataUsingXPO.WebAPI - Orders.cs](CS/DxGrid.BindToDataUsingXPO.WebAPI/Data/Orders.cs)
+* [DxGrid.BindToDataUsingXPO - Program.cs](CS/DxGrid.BindToDataUsingXPO/Program.cs)
+* [DxGrid.BindToDataUsingXPO - Index.razor](CS/DxGrid.BindToDataUsingXPO/Components/Pages/Index.razor)
 
 ## Documentation
 
