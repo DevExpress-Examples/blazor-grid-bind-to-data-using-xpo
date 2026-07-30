@@ -121,7 +121,7 @@ The grid sends requests to a Web API that delegates data shaping to the XPO quer
 
 ## Documentation
 
-* [XPO](https://docs.devexpress.com/XPO/2004/express-persistent-objects)
+* [XPO](https://docs.devexpress.com/XPO/1998/express-persistent-objects))
 * [GridDevExtremeDataSource\<T\>](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridDevExtremeDataSource-1)
 * [DevExtreme.AspNet.Data.DataSourceLoader](https://devexpress.github.io/DevExtreme.AspNet.Data/net/api/DevExtreme.AspNet.Data.DataSourceLoader.html)
 
